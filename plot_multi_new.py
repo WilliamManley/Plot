@@ -24,11 +24,19 @@ num_iterations_combined = pd.concat(num_iterations_df, ignore_index=False, axis=
 
 #relative tolerance calculations
 #!!!Change range to fit number of simulations!!!
-relative_combined = pd.DataFrame(np.random.randint(1, 5, size=(1000, 7)), columns=filenames_1)
+relative_combined = pd.DataFrame(np.random.randint(1, 5, size=(min(len(initial_combined), len(final_combined)), 7)), columns=filenames_1)
 relative_combined.index = np.arange(1,len(relative_combined)+1)
-#relative_combined = np.empty((1000, 7))
-for i in range(0, 7):
+
+for i in range(0, len(initial_tolerance_df)):
     relative_combined.iloc[:, i] = final_combined.iloc[:, i] / initial_combined.iloc[:, i]
+
+#percentage change tolerance calculations
+#!!!Change range to fit number of simulations!!!
+percentage_combined = pd.DataFrame(np.random.randint(1, 5, size=(min(len(initial_combined), len(final_combined)), 7)), columns=filenames_1)
+percentage_combined.index = np.arange(1,len(percentage_combined)+1)
+
+for i in range(0, len(initial_tolerance_df)):
+    percentage_combined.iloc[:, i] = ((initial_combined.iloc[:, i] - final_combined.iloc[:, i]) / initial_combined.iloc[:, i]) * 100
 
 # define a figure, with subplots as an array "ax" 
 fig, ax = plt.subplots(2,2)
@@ -37,6 +45,7 @@ fig, ax = plt.subplots(2,2)
 ax[0, 0].plot(initial_combined)
 ax[0, 1].plot(relative_combined)
 ax[1, 0].plot(num_iterations_combined)
+ax[1, 1].plot(percentage_combined)
 
 # plot 1 - (initial) residuals time series
 
@@ -68,14 +77,6 @@ ax[0, 0].legend(legend_1)
 
 # plot 2 - relative tol time series
 
-# instantaiate array for legend names
-legend_2 = []
-# obtain legend names from file names
-for string in filenames_2:
-    # desired name in legend
-    new_string = string.replace("logs/", "")
-    #add (to end) of legend
-    legend_2.append(new_string)
 # title of plot
 ax[0, 1].set_title("Relative Tolerances vs. Iteration")
 # x axis label
@@ -88,18 +89,10 @@ ax[0, 1].set_yscale("log")
 ax[0, 1].set_xlim(1, len(relative_combined))
 
 # add legend to the plot
-ax[0, 1].legend(legend_2)
+ax[0, 1].legend(legend_1)
 
 # plot 3 - number iterations at each timestep time series
 
-# instantaiate array for legend names
-legend_3 = []
-# obtain legend names from file names
-for string in filenames_3:
-    # desired name in legend
-    new_string = string.replace("logs/", "")
-    #add (to end) of legend
-    legend_3.append(new_string)
 # title of plot
 ax[1, 0].set_title("Number Inner Iterations In SIMPLE Loop vs. Outer Iteration")
 # x axis label
@@ -112,8 +105,21 @@ ax[1, 0].set_ylabel("Number Inner Iterations")
 ax[1, 0].set_xlim(1, len(num_iterations_combined))
 
 # add legend to the plot
-ax[1, 0].legend(legend_3)
+ax[1, 0].legend(legend_1)
 
+# plot 4 - % change in initial to final tolerance time series.
+
+# title of plot
+ax[1, 1].set_title("Percentage change")
+# x axis label
+ax[1, 1].set_xlabel("Iteration")
+# y axis label
+ax[1, 1].set_ylabel("Percentage Change")
+# only plot to data range
+ax[1, 1].set_xlim(1, len(percentage_combined))
+
+# add legend to the plot
+ax[1, 1].legend(legend_1)
 
 # Generate the plots
 
