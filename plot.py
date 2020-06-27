@@ -17,6 +17,7 @@ plt.axhline(y=1.0e-05, color="black", linestyle='--')
 #Array for legend names
 leg_n = []
 
+#Iterate through filenames, changing strings.
 for string in filenames:
     new_string = string.replace("logs/", "")
     leg_n.append(new_string)
