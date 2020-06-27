@@ -17,21 +17,19 @@ initial_tolerance_df = [pd.read_csv(filename, names=[filename[5:]], sep="\t", en
 final_tolerance_df = [pd.read_csv(filename, names=[filename[5:]], sep="\t", engine='python') for filename in filenames_2]
 num_iterations_df = [pd.read_csv(filename, names=[filename[5:]], sep="\t", engine='python') for filename in filenames_3]
 
-#relative tolerance calculations
-#relative_tolerance_df[i] = final_tolerance_df[i] / initial_tolerance_df[i]
-
 # Combine the dataframes
 initial_combined = pd.concat(initial_tolerance_df, ignore_index=False, axis=1)
 final_combined = pd.concat(final_tolerance_df, ignore_index=False, axis=1)
-#relative_combined = pd.concat(relative_tolerance_df, ignore_index=False, axis=1)
 num_iterations_combined = pd.concat(num_iterations_df, ignore_index=False, axis=1)
 
-##Change range to fit number of simulations
-relative_combined = np.empty((1000, 6))
-for i in range(0, 6):
-    relative_combined[:, i] = final_combined.iloc[:, i] / initial_combined.iloc[:, i]
+#relative tolerance calculations
+#!!!Change range to fit number of simulations!!!
+relative_combined = pd.DataFrame(np.random.randint(1, 5, size=(1000, 7)), columns=filenames_1)
+relative_combined.index = np.arange(1,len(relative_combined)+1)
+#relative_combined = np.empty((1000, 7))
+for i in range(0, 7):
+    relative_combined.iloc[:, i] = final_combined.iloc[:, i] / initial_combined.iloc[:, i]
 
-print(relative_combined)
 # define a figure, with subplots as an array "ax" 
 fig, ax = plt.subplots(2,2)
 
@@ -62,7 +60,8 @@ ax[0, 0].set_ylabel("Residual")
 # log scale on y axis since skewed to small residuals
 ax[0, 0].set_yscale("log")
 # only plot to data range
-ax[0, 0].set_xlim(0, len(initial_combined))
+#!!! fix label issues with starting x axis!!!
+ax[0, 0].set_xlim(1, len(initial_combined))
 
 # add legend to the plot
 ax[0, 0].legend(legend_1)
@@ -86,7 +85,7 @@ ax[0, 1].set_ylabel("Relative Tolerances")
 # log scale on y axis since skewed to small residuals
 ax[0, 1].set_yscale("log")
 # only plot to data range
-ax[0, 1].set_xlim(0, len(relative_combined))
+ax[0, 1].set_xlim(1, len(relative_combined))
 
 # add legend to the plot
 ax[0, 1].legend(legend_2)
@@ -110,7 +109,7 @@ ax[1, 0].set_ylabel("Number Inner Iterations")
 # log scale on y axis since skewed to small residuals
 #ax[1, 0].set_yscale("log")
 # only plot to data range
-ax[1, 0].set_xlim(0, len(num_iterations_combined))
+ax[1, 0].set_xlim(1, len(num_iterations_combined))
 
 # add legend to the plot
 ax[1, 0].legend(legend_3)
