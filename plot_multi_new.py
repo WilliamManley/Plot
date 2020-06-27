@@ -18,16 +18,20 @@ final_tolerance_df = [pd.read_csv(filename, names=[filename[5:]], sep="\t", engi
 num_iterations_df = [pd.read_csv(filename, names=[filename[5:]], sep="\t", engine='python') for filename in filenames_3]
 
 #relative tolerance calculations
-relative_tolerance_df = []
-for i in range(0,6):
-    relative_tolerance_df[i] = final_tolerance_df[i] / initial_tolerance_df[i]
+#relative_tolerance_df[i] = final_tolerance_df[i] / initial_tolerance_df[i]
 
 # Combine the dataframes
 initial_combined = pd.concat(initial_tolerance_df, ignore_index=False, axis=1)
 final_combined = pd.concat(final_tolerance_df, ignore_index=False, axis=1)
-relative_combined = pd.concat(relative_tolerance_df, ignore_index=False, axis=1)
+#relative_combined = pd.concat(relative_tolerance_df, ignore_index=False, axis=1)
 num_iterations_combined = pd.concat(num_iterations_df, ignore_index=False, axis=1)
 
+##Change range to fit number of simulations
+relative_combined = np.empty((1000, 6))
+for i in range(0, 6):
+    relative_combined[:, i] = final_combined.iloc[:, i] / initial_combined.iloc[:, i]
+
+print(relative_combined)
 # define a figure, with subplots as an array "ax" 
 fig, ax = plt.subplots(2,2)
 

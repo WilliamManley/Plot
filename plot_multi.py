@@ -31,6 +31,7 @@ for f in filenames_1:
     # plot column 0 (time step / iteration) against (initial) residuals
     ax[0, 0].plot(initial_tolerance_time_steps, initial_tolerances)
 
+
 #2: final tolerance data
 for g in filenames_2:
     #read file
