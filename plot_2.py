@@ -5,7 +5,6 @@ import numpy as np
 import string
 
 
-
 # define files containing data for each plot
 
 #1: initial tolerance files
@@ -17,6 +16,11 @@ filenames_2 = ["logs/pFinalRes_0", "logs/pFinalRes_1", "logs/UxFinalRes_0", "log
 #3: number of iterations files
 filenames_3 = ["logs/pIters_0", "logs/pIters_1", "logs/UxIters_0", "logs/UyIters_0", "logs/UzIters_0", "logs/kIters_0", "logs/epsilonIters_0"]
 
+# define seperate plots 
+fig, ax = plt.subplots(2,2)
+
+
+
 # read each file as useable data:
 
 #1&2: initial tolerance data
@@ -25,7 +29,7 @@ for f in filenames_1:
     initial_tolerance_data = np.loadtxt(f)
     initial_tolerance_time_steps = initial_tolerance_data[:,0]
     initial_tolerances = initial_tolerance_data[:,1]
-    #plt.plot(initial_tolerance_time_steps, initial_tolerances)
+    ax[0, 0].plot(initial_tolerance_time_steps, initial_tolerances)
     
 #2: final tolerance data
 for g in filenames_2:
@@ -33,6 +37,15 @@ for g in filenames_2:
     final_tolerance_data = np.loadtxt(g)
     final_tolerance_time_steps = final_tolerance_data[:,0]
     final_tolerances = final_tolerance_data[:,1]
+
+    # determine where simulation finished if it did
+    relative_tolerance_time_steps = list(range(0,1000))
+    
+    # calculate relative tolerances
+    relative_tolerances = (final_tolerances)/(initial_tolerances)
+
+    # plot column 0 (time step / iteration) against (initial) residuals
+    ax[0, 1].plot(relative_tolerance_time_steps, relative_tolerances)
     
 
 #3: number iterations data
@@ -41,6 +54,10 @@ for h in filenames_3:
     number_iterations_data = np.loadtxt(h)
     number_iterations_time_steps = number_iterations_data[:,0]
     number_iterations = number_iterations_data[:,1]
+
+    # plot time step / iteration against relative tolerances
+    ax[1, 0].plot(number_iterations_time_steps, number_iterations)
+    
     
 
 
@@ -51,21 +68,17 @@ for h in filenames_3:
 
 # determine where simulation finished if it did
 #relative_tolerance_time_steps = list(range(0,np.min(len(initial_tolerance_time_steps), len(final_tolerance_time_steps))))
-relative_tolerance_time_steps = list(range(0,1000))
+#relative_tolerance_time_steps = list(range(0,1000))
 # calculate relative tolerances
-relative_tolerances = (final_tolerances)/(initial_tolerances)
+#relative_tolerances = (final_tolerances)/(initial_tolerances)
 
 
-
-"""
 #!!! Not yet configured combining into single plot window. !!!#
 # plot 1 - (initial) residuals time series
 
-# plot column 0 (time step / iteration) against (initial) residuals
-## plt.plot(initial_tolerance_time_steps, initial_tolerances)
 # (optional) add horizontal lines to plot for idea of residuals relaxations.
-plt.axhline(y=1.0e-05, color="black", linestyle='--')
-plt.axhline(y=1.0e-04, color="black", linestyle='-')
+ax[0, 0].axhline(y=1.0e-05, color="black", linestyle='--')
+ax[0, 0].axhline(y=1.0e-04, color="black", linestyle='-')
 # instantaiate array for legend names
 legend_1 = []
 # obtain legend names from file names
@@ -75,30 +88,23 @@ for string in filenames_1:
     #add (to end) of legend
     legend_1.append(new_string)
 # title of plot
-plt.title("Residual vs. Iteration")
+ax[0, 0].set_title("Residual vs. Iteration")
 # x axis label
-plt.xlabel("Iteration")
+ax[0, 0].set_xlabel("Iteration")
 # y axis label
-plt.ylabel("Residual")
+ax[0, 0].set_ylabel("Residual")
 # log scale on y axis since skewed to small residuals
-plt.yscale("log")
+ax[0, 0].set_yscale("log")
 # only plot to data range
-plt.xlim(0, len(initial_tolerance_time_steps))
+ax[0, 0].set_xlim(0, len(initial_tolerance_time_steps))
 #!!! plt.ylim() - figure this out so no white space in y direction !!!#
 
 # add legend to the plot
-plt.legend(legend_1)
-# save plot in current directory
-plt.savefig('figure.png')
-# display plot until closed
-plt.show()
+ax[0, 0].legend(legend_1)
 
-"""
+
 
 # plot 2 - relative tol time series
-
-# plot time step / iteration against relative tolerances
-plt.plot(relative_tolerance_time_steps, relative_tolerances)
 
 # instantaiate array for legend names
 legend_2 = []
@@ -109,30 +115,23 @@ for string in filenames_2:
     #add (to end) of legend
     legend_2.append(new_string)
 # title of plot
-plt.title("Relative Tolerances vs. Iteration")
+ax[0, 1].set_title("Relative Tolerances vs. Iteration")
 # x axis label
-plt.xlabel("Iteration")
+ax[0, 1].set_xlabel("Iteration")
 # y axis label
-plt.ylabel("Relative Tolerances")
+ax[0, 1].set_ylabel("Relative Tolerances")
 # log scale on y axis since skewed to small residuals
-plt.yscale("log")
+ax[0, 1].set_yscale("log")
 # only plot to data range
-plt.xlim(0, len(relative_tolerance_time_steps))
+ax[0, 1].set_xlim(0, len(relative_tolerance_time_steps))
 #!!! plt.ylim() - figure this out so no white space in y direction !!!#
 
 # add legend to the plot
-plt.legend(legend_2)
-# save plot in current directory
-plt.savefig('figure.png')
-# display plot until closed
-plt.show()
+ax[0, 1].legend(legend_2)
 
-"""
+
 
 # plot 3 - number iterations at each timestep time series
-
-# plot time step / iteration against relative tolerances
-##plt.plot(number_iterations_time_steps, number_iterations)
 
 # instantaiate array for legend names
 legend_3 = []
@@ -143,21 +142,24 @@ for string in filenames_3:
     #add (to end) of legend
     legend_3.append(new_string)
 # title of plot
-plt.title("Number Inner Iterations In SIMPLE Loop vs. Outer Iteration")
+ax[1, 0].set_title("Number Inner Iterations In SIMPLE Loop vs. Outer Iteration")
 # x axis label
-plt.xlabel("Outer Iteration")
+ax[1, 0].set_xlabel("Outer Iteration")
 # y axis label
-plt.ylabel("Number Inner Iterations")
+ax[1, 0].set_ylabel("Number Inner Iterations")
 # log scale on y axis since skewed to small residuals
-plt.yscale("log")
+ax[1, 0].set_yscale("log")
 # only plot to data range
-plt.xlim(0, len(number_iterations_time_steps))
+ax[1, 0].set_xlim(0, len(number_iterations_time_steps))
 #!!! plt.ylim() - figure this out so no white space in y direction !!!#
 
 # add legend to the plot
-plt.legend(legend_3)
+ax[1, 0].legend(legend_3)
+
+
+# Generate the plots
+
 # save plot in current directory
 plt.savefig('figure.png')
 # display plot until closed
 plt.show()
-"""
