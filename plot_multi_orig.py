@@ -57,7 +57,7 @@ relative_tolerances = (final_tolerances)/(initial_tolerances)
 
 
 
-"""
+
 #!!! Not yet configured combining into single plot window. !!!#
 # plot 1 - (initial) residuals time series
 
@@ -93,7 +93,7 @@ plt.savefig('figure.png')
 # display plot until closed
 plt.show()
 
-"""
+
 
 # plot 2 - relative tol time series
 
@@ -127,7 +127,7 @@ plt.savefig('figure.png')
 # display plot until closed
 plt.show()
 
-"""
+
 
 # plot 3 - number iterations at each timestep time series
 
@@ -160,4 +160,3 @@ plt.legend(legend_3)
 plt.savefig('figure.png')
 # display plot until closed
 plt.show()
-"""

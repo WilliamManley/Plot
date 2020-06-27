@@ -19,18 +19,18 @@ filenames_3 = ["logs/pIters_0", "logs/pIters_1", "logs/UxIters_0", "logs/UyIters
 # define seperate plots 
 fig, ax = plt.subplots(2,2)
 
-
-
 # read each file as useable data:
 
-#1&2: initial tolerance data
+#1: initial tolerance data
 for f in filenames_1:
     #read file
     initial_tolerance_data = np.loadtxt(f)
     initial_tolerance_time_steps = initial_tolerance_data[:,0]
     initial_tolerances = initial_tolerance_data[:,1]
+
+    # plot column 0 (time step / iteration) against (initial) residuals
     ax[0, 0].plot(initial_tolerance_time_steps, initial_tolerances)
-    
+
 #2: final tolerance data
 for g in filenames_2:
     #read file
@@ -39,12 +39,13 @@ for g in filenames_2:
     final_tolerances = final_tolerance_data[:,1]
 
     # determine where simulation finished if it did
+    #relative_tolerance_time_steps = list(range(0,np.min(len(initial_tolerance_time_steps), len(final_tolerance_time_steps))))
     relative_tolerance_time_steps = list(range(0,1000))
     
     # calculate relative tolerances
     relative_tolerances = (final_tolerances)/(initial_tolerances)
 
-    # plot column 0 (time step / iteration) against (initial) residuals
+    # plot time step / iteration against relative tolerances
     ax[0, 1].plot(relative_tolerance_time_steps, relative_tolerances)
     
 
@@ -55,25 +56,11 @@ for h in filenames_3:
     number_iterations_time_steps = number_iterations_data[:,0]
     number_iterations = number_iterations_data[:,1]
 
-    # plot time step / iteration against relative tolerances
+    # plot time step / iteration against number of iterations
     ax[1, 0].plot(number_iterations_time_steps, number_iterations)
-    
-    
-
-
 
 # relevant calculations before plotting
 
-#2: relative tolerance calculation
-
-# determine where simulation finished if it did
-#relative_tolerance_time_steps = list(range(0,np.min(len(initial_tolerance_time_steps), len(final_tolerance_time_steps))))
-#relative_tolerance_time_steps = list(range(0,1000))
-# calculate relative tolerances
-#relative_tolerances = (final_tolerances)/(initial_tolerances)
-
-
-#!!! Not yet configured combining into single plot window. !!!#
 # plot 1 - (initial) residuals time series
 
 # (optional) add horizontal lines to plot for idea of residuals relaxations.
@@ -148,7 +135,7 @@ ax[1, 0].set_xlabel("Outer Iteration")
 # y axis label
 ax[1, 0].set_ylabel("Number Inner Iterations")
 # log scale on y axis since skewed to small residuals
-ax[1, 0].set_yscale("log")
+#ax[1, 0].set_yscale("log")
 # only plot to data range
 ax[1, 0].set_xlim(0, len(number_iterations_time_steps))
 #!!! plt.ylim() - figure this out so no white space in y direction !!!#
