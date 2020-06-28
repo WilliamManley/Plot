@@ -1,5 +1,6 @@
 import glob
 import matplotlib.pyplot as plt
+plt.style.use('ggplot')
 import numpy as np
 import pandas as pd
 
