@@ -76,7 +76,7 @@ ax[0, 1].axhline(y=1.0e-04, color="black", linestyle='-')
 # instantaiate array for legend names
 legend_1 = []
 # obtain legend names from file names
-for string in filenames_1:
+for string in filenames_2:
     # desired name in legend
     new_string = string.replace("Processed/Simulation2/logs/", "")
     #add (to end) of legend
@@ -104,7 +104,7 @@ ax[1, 0].axhline(y=1.0e-04, color="black", linestyle='-')
 # instantaiate array for legend names
 legend_1 = []
 # obtain legend names from file names
-for string in filenames_1:
+for string in filenames_3:
     # desired name in legend
     new_string = string.replace("Processed/Simulation3/logs/", "")
     #add (to end) of legend
@@ -134,7 +134,7 @@ ax[1, 1].axhline(y=1.0e-04, color="black", linestyle='-')
 # instantaiate array for legend names
 legend_1 = []
 # obtain legend names from file names
-for string in filenames_1:
+for string in filenames_4:
     # desired name in legend
     new_string = string.replace("Processed/Simulation4/logs/", "")
     #add (to end) of legend
