@@ -57,7 +57,7 @@ ax[0, 0].set_ylabel("Residual")
 ax[0, 0].set_yscale("log")
 # only plot to data range
 #!!! fix label issues with starting x axis!!!
-ax[0, 0].set_xlim(1, len(initial_combined))
+ax[0, 0].set_xlim(1, len(sim1_initial_combined))
 
 # add legend to the plot
 ax[0, 0].legend(legend_1)
@@ -85,7 +85,7 @@ ax[0, 0].set_ylabel("Residual")
 ax[0, 0].set_yscale("log")
 # only plot to data range
 #!!! fix label issues with starting x axis!!!
-ax[0, 0].set_xlim(1, len(initial_combined))
+ax[0, 0].set_xlim(1, len(sim2_initial_combined))
 
 # add legend to the plot
 ax[0, 0].legend(legend_1)
@@ -113,7 +113,7 @@ ax[0, 0].set_ylabel("Residual")
 ax[0, 0].set_yscale("log")
 # only plot to data range
 #!!! fix label issues with starting x axis!!!
-ax[0, 0].set_xlim(1, len(initial_combined))
+ax[0, 0].set_xlim(1, len(sim3_initial_combined))
 
 # add legend to the plot
 ax[0, 0].legend(legend_1)
