@@ -4,14 +4,15 @@ plt.style.use('seaborn-dark')
 import numpy as np
 import pandas as pd
 
+
 #1: initial tolerance files
-filenames_1 = ["logs/p_0", "logs/p_1", "logs/Ux_0", "logs/Uy_0", "logs/Uz_0", "logs/k_0", "logs/epsilon_0"]
+filenames_1 = ["Processed/Simulation1/logs/p_0", "Processed/Simulation1/logs/p_1", "Processed/Simulation1/logs/Ux_0", "Processed/Simulation1/logs/Uy_0", "Processed/Simulation1/logs/Uz_0", "Processed/Simulation1/logs/k_0", "Processed/Simulation1/logs/epsilon_0"]
 
 #2: final tolerance files
-filenames_2 = ["logs/pFinalRes_0", "logs/pFinalRes_1", "logs/UxFinalRes_0", "logs/UyFinalRes_0", "logs/UzFinalRes_0", "logs/kFinalRes_0", "logs/epsilonFinalRes_0"]
+filenames_2 = ["Processed/Simulation1/logs/pFinalRes_0", "Processed/Simulation1/logs/pFinalRes_1", "Processed/Simulation1/logs/UxFinalRes_0", "Processed/Simulation1/logs/UyFinalRes_0", "Processed/Simulation1/logs/UzFinalRes_0", "Processed/Simulation1/logs/kFinalRes_0", "Processed/Simulation1/logs/epsilonFinalRes_0"]
 
 #3: number of iterations files
-filenames_3 = ["logs/pIters_0", "logs/pIters_1", "logs/UxIters_0", "logs/UyIters_0", "logs/UzIters_0", "logs/kIters_0", "logs/epsilonIters_0"]
+filenames_3 = ["Processed/Simulation1/logs/pIters_0", "Processed/Simulation1/logs/pIters_1", "Processed/Simulation1/logs/UxIters_0", "Processed/Simulation1/logs/UyIters_0", "Processed/Simulation1/logs/UzIters_0", "Processed/Simulation1/logs/kIters_0", "Processed/Simulation1/logs/epsilonIters_0"]
 
 #read amnd generate dataframe from txt files:
 initial_tolerance_df = [pd.read_csv(filename, names=[filename[5:]], sep="\t", engine='python') for filename in filenames_1]
@@ -59,7 +60,7 @@ legend_1 = []
 # obtain legend names from file names
 for string in filenames_1:
     # desired name in legend
-    new_string = string.replace("logs/", "")
+    new_string = string.replace("Processed/Simulation1/logs/", "")
     #add (to end) of legend
     legend_1.append(new_string)
 # title of plot
