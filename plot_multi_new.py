@@ -1,6 +1,6 @@
 import glob
 import matplotlib.pyplot as plt
-plt.style.use('ggplot')
+plt.style.use('seaborn-dark')
 import numpy as np
 import pandas as pd
 
