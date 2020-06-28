@@ -42,6 +42,7 @@ for i in range(0, len(initial_tolerance_df)):
 # define a figure, with subplots as an array "ax" 
 fig, ax = plt.subplots(2,2)
 
+
 #Generate plots:
 ax[0, 0].plot(initial_combined)
 ax[0, 1].plot(relative_combined)
@@ -76,6 +77,7 @@ ax[0, 0].set_xlim(1, len(initial_combined))
 # add legend to the plot
 ax[0, 0].legend(legend_1)
 
+
 # plot 2 - relative tol time series
 
 # title of plot
@@ -92,6 +94,7 @@ ax[0, 1].set_xlim(1, len(relative_combined))
 # add legend to the plot
 ax[0, 1].legend(legend_1)
 
+
 # plot 3 - number iterations at each timestep time series
 
 # title of plot
@@ -104,6 +107,7 @@ ax[1, 0].set_ylabel("Number Inner Iterations")
 #ax[1, 0].set_yscale("log")
 # only plot to data range
 ax[1, 0].set_xlim(1, len(num_iterations_combined))
+
 
 # add legend to the plot
 ax[1, 0].legend(legend_1)
@@ -122,7 +126,6 @@ ax[1, 1].set_xlim(1, len(percentage_combined))
 # add legend to the plot
 ax[1, 1].legend(legend_1)
 
-# Generate the plots
 
 # force plot to display in full-screen
 manager = plt.get_current_fig_manager()
